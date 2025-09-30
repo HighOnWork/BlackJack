@@ -41,12 +41,22 @@ def blackJack():
 
 def next_step(total, total_c, computer_cards, user_cards):
     choices = 0
+    a_changed = False
     if choices < 1:
         choice = input("Type 'y' to get another card, type 'n' to pass: ").strip().lower()
         if choice == 'n':
             print("Computer's cards are:", str(computer_cards).replace("'", ""))
             print("Total value of computer's cards is:", total_c)
             if total_c > 21:
+                if 'A' in computer_cards and not a_changed:
+                    a_changed = True
+                    total_c -= 10
+                    next_step(total, total_c, computer_cards, user_cards)
+                if 'A' in user_cards and not a_changed:
+                    a_changed = True
+                    total -= 10
+                    print("Total value of your cards is:", total)
+                    next_step(total, total_c, computer_cards, user_cards)
                 print("Computer went over. You win!")
             elif total > total_c:
                 print("You win!")
