@@ -23,9 +23,13 @@ def value(cards_user, cards_computer):
         print("You went over. You lose")
     elif total == 21:
         print("Blackjack! You win!")
+
+    if total_c == 21:
+        print("Blackjack! Computer wins!")
+    elif total_c > 21:
+        print("Computer went over. You win!")
     else:
         next_step(total, total_c, cards_computer, cards_user)
-
 def blackJack():
     Cards = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
     user_cards = []
@@ -45,6 +49,10 @@ def next_step(total, total_c, computer_cards, user_cards):
     if choices < 1:
         choice = input("Type 'y' to get another card, type 'n' to pass: ").strip().lower()
         if choice == 'n':
+            if total_c < 17:
+                computer_cards.append(random.choice(['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']))
+                value(user_cards, computer_cards)
+                next_step(total, total_c, computer_cards, user_cards)
             print("Computer's cards are:", str(computer_cards).replace("'", ""))
             print("Total value of computer's cards is:", total_c)
             if total_c > 21:
